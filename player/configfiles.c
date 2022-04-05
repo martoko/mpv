@@ -207,7 +207,9 @@ static char *mp_get_playback_resume_config_filename(struct MPContext *mpctx,
             char *cwd = mp_getcwd(tmp);
             if (!cwd)
                 goto exit;
-            realpath = mp_path_join(tmp, cwd, fname);
+            realpath = mp_path_join(tmp, bstrto0(tmp, mp_dirname(fname)), talloc_asprintf(tmp, ".%s.rp", mp_basename(fname)));
+            res = mp_path_join(NULL, cwd, realpath);
+            goto exit;
         }
     }
     uint8_t md5[16];
